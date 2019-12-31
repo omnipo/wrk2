@@ -630,6 +630,11 @@ static void socket_writeable(aeEventLoop *loop, int fd, void *data, int mask) {
         c->pending = cfg.pipeline;
     }
 
+    time_t ltime; /* calendar time */
+    ltime=time(NULL); /* get current cal time */
+    struct timeval tval;
+    gettimeofday(&tval, NULL);
+    printf("yyf time=%s.%06ld, buf=%s", asctime( localtime(&ltime) ), (long int)tval.tv_usec, buf);
     switch (sock.write(c, buf, len, &n)) {
         case OK:    break;
         case ERROR: goto error;
